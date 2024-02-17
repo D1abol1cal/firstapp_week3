@@ -42,21 +42,27 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const Text(
-            'A random idea:',
-          ),
-          BigCard(pair: pair),
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext();
-            },
-            child: const Text(
-              'Next suggestion',
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(
+              height: 30,
             ),
-          )
-        ],
+            const Text(
+              'A random idea:',
+            ),
+            BigCard(pair: pair),
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext();
+              },
+              child: const Text(
+                'Next suggestion',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -72,23 +78,29 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Card(
-            color: Theme.of(context).colorScheme.primary,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                pair.asLowerCase,
-              ),
-            ),
-          ),
-        ],
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+      shadows: const [
+        Shadow(
+          color: Colors.black,
+          offset: Offset(2, 2),
+          blurRadius: 4,
+        ),
+      ],
+      backgroundColor: const Color.fromARGB(255, 1, 84, 99),
+    );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          textScaler: const TextScaler.linear(0.5),
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
