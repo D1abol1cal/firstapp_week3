@@ -1,3 +1,7 @@
+//Syed Nofel Talha (20K-0151),
+//Arhum Hashmi (20K-1892),
+//Maarib Ul Haq Siddiqui (20K-0202)
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,14 +74,6 @@ class MyHomePage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
-              },
-              child: const Text(
-                'Next suggestion',
-              ),
-            ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -87,6 +83,14 @@ class MyHomePage extends StatelessWidget {
                   },
                   icon: Icon(icon),
                   label: const Text('Like'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    appState.getNext();
+                  },
+                  child: const Text(
+                    'Next suggestion',
+                  ),
                 ),
               ],
             ),
