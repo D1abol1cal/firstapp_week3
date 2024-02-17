@@ -1,16 +1,3 @@
-# firstapp_week3
+# Random Word Pair Generator 
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A simple flutter app that allows the user to randomly generate unique word pairs - like word pairs - view previously liked word pairs using a navigation panel to another page - The project is responsive towards all types of mobile devices / desktop devices.
