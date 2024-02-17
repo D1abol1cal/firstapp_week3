@@ -50,6 +50,13 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
+    IconData icon;
+
+    if (appState.favourites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
 
     return Scaffold(
       body: Center(
@@ -60,6 +67,9 @@ class MyHomePage extends StatelessWidget {
               height: 30,
             ),
             BigCard(pair: pair),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () {
                 appState.getNext();
@@ -67,7 +77,19 @@ class MyHomePage extends StatelessWidget {
               child: const Text(
                 'Next suggestion',
               ),
-            )
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    appState.toggleFavourite();
+                  },
+                  icon: Icon(icon),
+                  label: const Text('Like'),
+                ),
+              ],
+            ),
           ],
         ),
       ),
