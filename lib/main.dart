@@ -46,6 +46,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void clearFavourites(int index) {
+    favourites.removeAt(index);
+    notifyListeners();
+  }
 }
 
 // ...
@@ -223,6 +228,15 @@ class FavoritesPage extends StatelessWidget {
             leading: const Icon(Icons.favorite),
             title: Text(pair.asLowerCase),
           ),
+        for (var pair in appState.favourites)
+          ElevatedButton(
+            onPressed: () {
+              appState.clearFavourites(
+                appState.favourites.indexOf(pair),
+              );
+            },
+            child: const Text('Clear'),
+          )
       ],
     );
   }
