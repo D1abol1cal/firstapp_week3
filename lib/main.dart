@@ -72,8 +72,24 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      pair.asLowerCase,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          Card(
+            color: Colors.orangeAccent,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                pair.asLowerCase,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
