@@ -20,4 +20,4 @@ Random Word Pair Generator is a fun and simple Flutter application that generate
 
 
 ## Update 
-- **App has been updated in accordance to classwork 6 (it now stores the liked wordpairs to file)
+- **App has been updated in accordance to classwork 6 (it now stores the liked wordpairs to file)**
