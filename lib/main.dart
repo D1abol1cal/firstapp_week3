@@ -5,9 +5,32 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
+}
+
+Future<void> createFile(var favorites) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/favorites.json');
+  await file.writeAsString(jsonEncode(favorites));
+}
+
+Future<List<String>> readFile() async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/favorites.json');
+  if (await file.exists()) {
+    var json = jsonDecode(await file.readAsString());
+    var pairs = <String>[];
+    for (var x in json) {
+      pairs.add(x);
+    }
+    return pairs;
+  }
+  return <String>[];
 }
 
 class MyApp extends StatelessWidget {
@@ -31,24 +54,36 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
+  var favourites = <String>[];
 
   void getNext() {
     current = WordPair.random();
     notifyListeners();
   }
 
-  var favourites = <WordPair>[];
-  void toggleFavourite() {
-    if (favourites.contains(current)) {
-      favourites.remove(current);
+  void toggleFavourite() async {
+    final currentString = current.toString();
+    if (favourites.contains(currentString)) {
+      favourites.remove(currentString);
     } else {
-      favourites.add(current);
+      favourites.add(currentString);
     }
+    await createFile(favourites);
     notifyListeners();
   }
 
   void clearFavourites(int index) {
     favourites.removeAt(index);
+    notifyListeners();
+  }
+
+  void read() async {
+    favourites = await readFile();
+    notifyListeners();
+  }
+
+  void clearAll() {
+    favourites = [];
     notifyListeners();
   }
 }
@@ -64,6 +99,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<MyAppState>(context, listen: false).read();
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget page;
@@ -124,7 +166,7 @@ class GeneratorPage extends StatelessWidget {
     var pair = appState.current;
 
     IconData icon;
-    if (appState.favourites.contains(pair)) {
+    if (appState.favourites.contains(pair.toString())) {
       icon = Icons.favorite;
     } else {
       icon = Icons.favorite_border;
@@ -226,7 +268,7 @@ class FavoritesPage extends StatelessWidget {
         for (var pair in appState.favourites)
           ListTile(
             leading: const Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
+            title: Text(pair.toLowerCase()),
           ),
         for (var pair in appState.favourites)
           ElevatedButton(
@@ -236,7 +278,13 @@ class FavoritesPage extends StatelessWidget {
               );
             },
             child: const Text('Clear'),
-          )
+          ),
+        ElevatedButton(
+          onPressed: () {
+            appState.clearAll();
+          },
+          child: Text('Clear All'),
+        )
       ],
     );
   }

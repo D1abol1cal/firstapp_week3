@@ -15,3 +15,7 @@ Random Word Pair Generator is a fun and simple Flutter application that generate
 - **University Assignment:** Developed as part of a university assignment to demonstrate practical knowledge of REST API integration in Flutter.
 
 ![alt text](assets/579a8e11-012d-4373-ab76-a492d0d49da0.jpg)
+
+
+## Update 
+- **App has been updated in accordance to classwork 6 (it now stores the liked wordpairs to file)
